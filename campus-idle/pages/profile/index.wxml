@@ -1,0 +1,118 @@
+<!--pages/profile/index.wxml-->
+<!-- 个人中心页 -->
+
+<view class="page-wrap">
+
+  <!-- ========== 用户信息头部 ========== -->
+  <view class="user-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <!-- 未登录：显示微信登录按钮 -->
+      <view wx:if="{{!hasLogin}}" class="login-area">
+        <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+          <image class="user-avatar" src="/images/default-avatar.png" mode="aspectFill"/>
+        </button>
+        <view class="login-info">
+          <input
+            class="nickname-input"
+            type="nickname"
+            placeholder="点击设置昵称"
+            bindblur="onNicknameComplete"
+          />
+          <text class="login-hint">点击头像和昵称完成登录</text>
+        </view>
+      </view>
+      <!-- 已登录：显示用户信息 -->
+      <view wx:else class="user-area">
+        <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"/>
+        <view class="user-info">
+          <text class="user-name">{{userInfo.nickName}}</text>
+          <text class="user-school">校园闲置 · 在线</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 数据统计卡片 ========== -->
+  <view class="stats-card">
+    <view class="stat-item" bindtap="onGoMyPublish">
+      <text class="stat-num">{{publishCount}}</text>
+      <text class="stat-label">我的发布</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="onGoFavorites">
+      <text class="stat-num">{{collectCount}}</text>
+      <text class="stat-label">我的收藏</text>
+    </view>
+  </view>
+
+  <!-- ========== 功能菜单列表 ========== -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="onGoFavorites">
+      <view class="menu-icon menu-icon-fav"></view>
+      <text class="menu-text">我的收藏</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onGoMyPublish">
+      <view class="menu-icon menu-icon-publish"></view>
+      <text class="menu-text">我的发布</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onGoAiChat">
+      <view class="menu-icon menu-icon-ai"></view>
+      <text class="menu-text">智能助手</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onGoChatList">
+      <view class="menu-icon menu-icon-chat"></view>
+      <text class="menu-text">我的消息</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onGoOrders">
+      <view class="menu-icon menu-icon-order"></view>
+      <text class="menu-text">我的订单</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onGoPrivacy">
+      <view class="menu-icon menu-icon-privacy"></view>
+      <text class="menu-text">隐私政策</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onGoAdmin">
+      <view class="menu-icon menu-icon-admin"></view>
+      <text class="menu-text">数据后台</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onAbout">
+      <view class="menu-icon menu-icon-about"></view>
+      <text class="menu-text">关于我们</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onClearCache">
+      <view class="menu-icon menu-icon-reset"></view>
+      <text class="menu-text">清除缓存</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="onCleanImages">
+      <view class="menu-icon menu-icon-reset"></view>
+      <text class="menu-text">清理无效图片</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- ========== 底部版本信息 ========== -->
+  <view class="version-info">
+    <text class="version-text">校园闲置 v2.0</text>
+    <text class="version-sub">让闲置物品找到新主人</text>
+  </view>
+
+</view>

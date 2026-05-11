@@ -1,0 +1,160 @@
+/* pages/chat/index.wxss */
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+/* 商品信息卡片 */
+.goods-card {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.goods-card-img {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background-color: #eee;
+}
+
+.goods-card-info {
+  margin-left: 16rpx;
+  overflow: hidden;
+}
+
+.goods-card-title {
+  display: block;
+  font-size: 26rpx;
+  color: #1a1a2e;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.goods-card-price {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #c44536;
+  margin-top: 4rpx;
+}
+
+/* 消息列表 */
+.chat-messages {
+  flex: 1;
+  padding: 20rpx 24rpx;
+}
+
+.msg-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+}
+
+.msg-left {
+  justify-content: flex-start;
+}
+
+.msg-right {
+  justify-content: flex-end;
+}
+
+.msg-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: #e5e7eb;
+}
+
+.msg-bubble-wrap {
+  display: flex;
+  flex-direction: column;
+  max-width: 65%;
+  margin: 0 16rpx;
+}
+
+.msg-left .msg-bubble-wrap { align-items: flex-start; }
+.msg-right .msg-bubble-wrap { align-items: flex-end; }
+
+.msg-bubble {
+  padding: 20rpx 26rpx;
+  border-radius: 20rpx;
+  word-break: break-word;
+}
+
+.msg-bubble-other {
+  background-color: #fff;
+  border-top-left-radius: 4rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.msg-bubble-mine {
+  background: var(--primary-gradient);
+  border-top-right-radius: 4rpx;
+}
+
+.msg-bubble-mine .msg-text { color: #fff; }
+.msg-bubble-other .msg-text { color: #1a1a2e; }
+
+.msg-text {
+  font-size: 28rpx;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.msg-time {
+  font-size: 20rpx;
+  color: #9ca3af;
+  margin-top: 8rpx;
+}
+
+/* 输入栏 */
+.chat-input-bar {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  height: 72rpx;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 28rpx;
+  font-size: 28rpx;
+}
+
+.send-btn {
+  margin-left: 16rpx;
+  width: 120rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  background-color: #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.send-btn-active {
+  background: var(--primary-gradient);
+}
+
+.send-btn-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 600;
+}

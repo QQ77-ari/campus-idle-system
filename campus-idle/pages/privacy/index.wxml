@@ -1,0 +1,56 @@
+<!--pages/privacy/index.wxml-->
+<!-- 隐私政策页 -->
+
+<view class="page-wrap">
+  <view class="privacy-card">
+    <text class="privacy-title">隐私政策</text>
+    <text class="privacy-update">更新日期：2025年1月1日</text>
+
+    <view class="privacy-section">
+      <text class="section-heading">一、信息收集</text>
+      <text class="section-content">本小程序在您使用过程中，可能收集以下信息：</text>
+      <text class="section-item">1. 微信头像和昵称：用于展示卖家身份，便于买家识别。</text>
+      <text class="section-item">2. 联系方式：您在发布商品时填写的微信号和手机号，仅用于买家联系您进行交易。</text>
+      <text class="section-item">3. 商品信息：您发布的商品标题、价格、描述、图片等内容。</text>
+    </view>
+
+    <view class="privacy-section">
+      <text class="section-heading">二、信息使用</text>
+      <text class="section-content">我们收集的信息仅用于以下用途：</text>
+      <text class="section-item">1. 在平台内展示您的商品信息，供其他用户浏览。</text>
+      <text class="section-item">2. 为其他用户提供与您联系进行交易的渠道。</text>
+      <text class="section-item">3. 改善平台服务质量和用户体验。</text>
+    </view>
+
+    <view class="privacy-section">
+      <text class="section-heading">三、信息保护</text>
+      <text class="section-content">我们重视您的信息安全：</text>
+      <text class="section-item">1. 您的数据存储在微信云开发环境中，受到微信平台的安全保护。</text>
+      <text class="section-item">2. 我们不会将您的个人信息出售、出租或共享给任何第三方。</text>
+      <text class="section-item">3. 您可以随时在"我的"页面中清除本地缓存数据。</text>
+    </view>
+
+    <view class="privacy-section">
+      <text class="section-heading">四、信息删除</text>
+      <text class="section-content">您拥有以下数据控制权利：</text>
+      <text class="section-item">1. 您可以随时下架或删除自己发布的商品。</text>
+      <text class="section-item">2. 您可以取消已收藏的商品。</text>
+      <text class="section-item">3. 您可以清除本地缓存，删除本地存储的用户信息。</text>
+    </view>
+
+    <view class="privacy-section">
+      <text class="section-heading">五、未成年人保护</text>
+      <text class="section-content">若您为未成年人，请在监护人的指导和同意下使用本服务。我们不会在明知的情况下收集未成年人的个人信息。</text>
+    </view>
+
+    <view class="privacy-section">
+      <text class="section-heading">六、联系我们</text>
+      <text class="section-content">如您对隐私政策有任何疑问，请通过小程序内"关于我们"页面中的联系方式与我们取得联系。</text>
+    </view>
+  </view>
+
+  <!-- 底部同意按钮（首次进入时显示） -->
+  <view wx:if="{{!agreed}}" class="bottom-bar">
+    <button class="agree-btn" bindtap="onAgree">我已阅读并同意</button>
+  </view>
+</view>

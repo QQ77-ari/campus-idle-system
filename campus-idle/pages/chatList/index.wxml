@@ -1,0 +1,39 @@
+<!--pages/chatList/index.wxml-->
+<!-- 聊天列表页 -->
+
+<view class="page-wrap">
+  <view wx:if="{{!isEmpty}}" class="chat-list">
+    <view
+      class="chat-item"
+      wx:for="{{chatList}}"
+      wx:key="_id"
+      data-item="{{item}}"
+      bindtap="onChatTap"
+      bindlongpress="onDeleteChat"
+    >
+      <image
+        class="chat-goods-img"
+        src="{{item.goodsImage || '/images/goods-placeholder.png'}}"
+        mode="aspectFill"
+        binderror="onImageError"
+        data-index="{{index}}"
+      />
+      <view class="chat-info">
+        <text class="chat-title ellipsis">{{item.goodsTitle || '商品对话'}}</text>
+        <text class="chat-last ellipsis">{{item.lastMessage}}</text>
+      </view>
+      <view class="chat-meta">
+        <text class="chat-time">{{item.lastTimeStr}}</text>
+        <view class="chat-unread" wx:if="{{item.unreadCount > 0}}">
+          <text class="unread-num">{{item.unreadCount > 99 ? '99+' : item.unreadCount}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-state">
+    <text class="empty-icon"> </text>
+    <text class="empty-text">暂无消息</text>
+    <text class="empty-sub">去商品详情页联系卖家吧</text>
+  </view>
+</view>

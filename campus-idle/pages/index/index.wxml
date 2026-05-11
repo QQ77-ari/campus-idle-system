@@ -1,0 +1,210 @@
+<!--pages/index/index.wxml-->
+<!-- 首页 —— 商品列表浏览 -->
+
+<!-- ==================== 顶部搜索栏 ==================== -->
+<view class="search-bar">
+  <view class="search-inner">
+    <view class="search-box">
+      <icon type="search" size="14" color="#9ca3af" class="search-icon"/>
+      <input
+        class="search-input"
+        placeholder="搜索闲置好物..."
+        value="{{searchValue}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+        confirm-type="search"
+      />
+      <icon
+        wx:if="{{searchValue}}"
+        type="clear"
+        size="14"
+        color="#9ca3af"
+        class="clear-icon"
+        bindtap="onSearchClear"
+      />
+    </view>
+    <view class="filter-btn" bindtap="onToggleFilter">
+      <text class="filter-icon">⚙</text>
+      <text class="filter-btn-text">筛选</text>
+    </view>
+  </view>
+</view>
+
+<!-- ==================== 筛选面板 ==================== -->
+<view class="filter-panel" wx:if="{{showFilter}}">
+  <view class="filter-mask" bindtap="onToggleFilter"></view>
+  <view class="filter-content">
+    <view class="filter-handle"></view>
+    <view class="filter-section">
+      <text class="filter-label">排序方式</text>
+      <view class="filter-options">
+        <view class="filter-tag {{sortBy === 'newest' ? 'active' : ''}}" data-sort="newest" bindtap="onSortTap">
+          <text>最新发布</text>
+        </view>
+        <view class="filter-tag {{sortBy === 'price-asc' ? 'active' : ''}}" data-sort="price-asc" bindtap="onSortTap">
+          <text>价格从低到高</text>
+        </view>
+        <view class="filter-tag {{sortBy === 'price-desc' ? 'active' : ''}}" data-sort="price-desc" bindtap="onSortTap">
+          <text>价格从高到低</text>
+        </view>
+      </view>
+    </view>
+    <view class="filter-section">
+      <text class="filter-label">价格区间（元）</text>
+      <view class="price-range">
+        <input class="price-input" placeholder="最低价" type="digit" value="{{priceMin}}" bindinput="onPriceMinInput"/>
+        <view class="price-line"></view>
+        <input class="price-input" placeholder="最高价" type="digit" value="{{priceMax}}" bindinput="onPriceMaxInput"/>
+      </view>
+    </view>
+    <view class="filter-section">
+      <text class="filter-label">新旧程度</text>
+      <view class="filter-options">
+        <view
+          class="filter-tag {{conditionFilter === item ? 'active' : ''}}"
+          wx:for="{{conditionList}}"
+          wx:key="*this"
+          data-condition="{{item}}"
+          bindtap="onConditionFilterTap"
+        >
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="filter-actions">
+      <view class="filter-reset-btn" bindtap="onFilterReset">
+        <text>重置</text>
+      </view>
+      <view class="filter-confirm-btn" bindtap="onFilterConfirm">
+        <text>确定</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- ==================== 顶部横幅 ==================== -->
+<view wx:if="{{showBanner && !searchValue}}" class="banner-section">
+  <view class="banner-card">
+    <view class="banner-content">
+      <text class="banner-title">校园闲置</text>
+      <text class="banner-subtitle">让闲置物品找到新主人</text>
+      <view class="banner-tags">
+        <text class="banner-tag-item">安全交易</text>
+        <text class="banner-tag-item">校内配送</text>
+        <text class="banner-tag-item">品质保证</text>
+      </view>
+    </view>
+    <view class="banner-illustration">
+      <text class="banner-emoji"> </text>
+    </view>
+    <view class="banner-close" bindtap="onCloseBanner">
+      <text class="banner-close-text">×</text>
+    </view>
+  </view>
+
+  <!-- 分类快捷入口 -->
+  <view class="quick-categories">
+    <view class="quick-cat-item" data-category="书籍" bindtap="onCategoryIconTap">
+      <view class="quick-cat-icon cat-book"></view>
+      <text class="quick-cat-text">书籍教材</text>
+    </view>
+    <view class="quick-cat-item" data-category="数码" bindtap="onCategoryIconTap">
+      <view class="quick-cat-icon cat-digital"></view>
+      <text class="quick-cat-text">数码电子</text>
+    </view>
+    <view class="quick-cat-item" data-category="生活用品" bindtap="onCategoryIconTap">
+      <view class="quick-cat-icon cat-life"></view>
+      <text class="quick-cat-text">生活好物</text>
+    </view>
+    <view class="quick-cat-item" data-category="体育器材" bindtap="onCategoryIconTap">
+      <view class="quick-cat-icon cat-sport"></view>
+      <text class="quick-cat-text">运动健身</text>
+    </view>
+  </view>
+</view>
+
+<!-- ==================== 分类筛选栏 ==================== -->
+<view class="category-bar" style="top: {{showBanner && !searchValue ? '360rpx' : '100rpx'}}">
+  <scroll-view scroll-x enable-flex class="category-scroll">
+    <view
+      wx:for="{{categories}}"
+      wx:key="*this"
+      class="category-item {{activeCategory === item ? 'active' : ''}}"
+      data-category="{{item}}"
+      bindtap="onCategoryTap"
+    >
+      {{item}}
+    </view>
+  </scroll-view>
+</view>
+
+<!-- ==================== 商品列表 ==================== -->
+<view class="goods-container" style="padding-top: {{showBanner && !searchValue ? '460rpx' : '190rpx'}}">
+
+  <!-- 骨架屏 -->
+  <view wx:if="{{isLoading && goodsList.length === 0}}" class="goods-list skeleton-list">
+    <view class="goods-card skeleton-card" wx:for="{{[1,2,3,4,5,6]}}" wx:key="*this">
+      <view class="goods-img-wrap skeleton-img"></view>
+      <view class="goods-info">
+        <view class="skeleton-title"></view>
+        <view class="skeleton-title short"></view>
+        <view class="goods-bottom">
+          <view class="skeleton-price"></view>
+          <view class="skeleton-seller"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品卡片列表（两列瀑布流布局） -->
+  <view class="goods-list">
+    <view
+      wx:for="{{goodsList}}"
+      wx:key="_id"
+      class="goods-card"
+      data-id="{{item._id}}"
+      bindtap="onGoodsTap"
+    >
+      <view class="goods-img-wrap">
+        <image
+          class="goods-img"
+          src="{{item.images[0]}}"
+          mode="aspectFill"
+          lazy-load
+          binderror="onImageError"
+          data-id="{{item._id}}"
+        />
+        <view class="condition-badge {{item.condition === '全新' ? 'new' : item.condition === '几乎全新' ? 'like-new' : 'used'}}">
+          {{item.condition}}
+        </view>
+      </view>
+      <view class="goods-info">
+        <text class="goods-title">{{item.title}}</text>
+        <view class="goods-bottom">
+          <view class="goods-price-wrap">
+            <text class="goods-price-symbol">¥</text>
+            <text class="goods-price">{{item.price}}</text>
+            <text wx:if="{{item.originalPrice}}" class="goods-original">¥{{item.originalPrice}}</text>
+          </view>
+        </view>
+        <view class="goods-meta">
+          <image class="goods-seller-avatar" src="{{item.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"/>
+          <text class="goods-seller-name">{{item.nickName || '匿名'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{goodsList.length === 0 && !isLoading}}" class="empty-state">
+    <text class="empty-icon"> </text>
+    <text class="empty-text">暂无相关商品</text>
+    <text class="empty-sub">换个关键词或分类试试吧</text>
+  </view>
+
+  <!-- 底部加载提示 -->
+  <view class="loading-tip">
+    <text wx:if="{{isLoading && goodsList.length > 0}}">加载中...</text>
+    <text wx:elif="{{!hasMore && goodsList.length > 0}}">— 已展示全部商品 —</text>
+  </view>
+</view>

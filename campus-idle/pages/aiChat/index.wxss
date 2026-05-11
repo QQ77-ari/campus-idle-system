@@ -1,0 +1,263 @@
+/* pages/aiChat/index.wxss */
+
+.chat-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+/* ========== 顶部操作栏 ========== */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 30rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.header-action {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  background-color: #f5f5f5;
+}
+
+.header-action-text {
+  font-size: 24rpx;
+  color: #6b7280;
+}
+
+/* ========== 消息列表 ========== */
+.chat-messages {
+  flex: 1;
+  padding: 20rpx 24rpx;
+  overflow: hidden;
+}
+
+/* ========== 快捷提问 ========== */
+.quick-section {
+  padding: 30rpx 0 20rpx;
+}
+
+.quick-title {
+  font-size: 26rpx;
+  color: #9ca3af;
+  margin-bottom: 16rpx;
+  display: block;
+}
+
+.quick-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.quick-item {
+  background-color: #fff;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 32rpx;
+  padding: 14rpx 28rpx;
+  transition: all 0.15s;
+}
+
+.quick-item:active {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.quick-item-text {
+  font-size: 26rpx;
+  color: #374151;
+}
+
+/* ========== 消息气泡行 ========== */
+.msg-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.msg-row-left {
+  justify-content: flex-start;
+}
+
+.msg-row-right {
+  justify-content: flex-end;
+}
+
+.msg-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: #e5e7eb;
+}
+
+.msg-bubble-wrap {
+  display: flex;
+  flex-direction: column;
+  max-width: 65%;
+  margin: 0 16rpx;
+}
+
+.msg-row-left .msg-bubble-wrap {
+  align-items: flex-start;
+}
+
+.msg-row-right .msg-bubble-wrap {
+  align-items: flex-end;
+}
+
+.msg-bubble {
+  padding: 20rpx 26rpx;
+  border-radius: 20rpx;
+  word-break: break-word;
+}
+
+.msg-bubble-ai {
+  background-color: #fff;
+  border-top-left-radius: 4rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.msg-bubble-user {
+  background: var(--primary-gradient);
+  border-top-right-radius: 4rpx;
+}
+
+.msg-bubble-user .msg-text {
+  color: #fff;
+}
+
+.msg-bubble-ai .msg-text {
+  color: #1a1a2e;
+}
+
+.msg-bubble-error {
+  background-color: #fef2f2;
+  border: 2rpx solid #fecaca;
+}
+
+.msg-bubble-error .msg-text {
+  color: #dc2626;
+}
+
+.msg-text {
+  font-size: 28rpx;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.msg-time {
+  font-size: 20rpx;
+  color: #9ca3af;
+  margin-top: 8rpx;
+}
+
+/* ========== 正在输入动画 ========== */
+.typing-dots {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 8rpx 0;
+}
+
+.dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background-color: #9ca3af;
+  animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ========== 底部输入栏 ========== */
+.chat-input-bar {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.input-action-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.input-action-icon {
+  font-size: 40rpx;
+  color: #6b7280;
+  font-weight: 300;
+}
+
+.chat-input {
+  flex: 1;
+  height: 72rpx;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 28rpx;
+  font-size: 28rpx;
+  color: #1a1a2e;
+}
+
+.send-btn {
+  margin-left: 16rpx;
+  width: 120rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  background-color: #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.send-btn-active {
+  background: var(--primary-gradient);
+}
+
+.send-btn-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ========== 图片消息 ========== */
+.msg-image {
+  width: 360rpx;
+  border-radius: 16rpx;
+  display: block;
+}

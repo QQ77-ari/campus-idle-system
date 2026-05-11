@@ -1,0 +1,67 @@
+<!--pages/chat/index.wxml-->
+<!-- 买家-卖家聊天页 -->
+
+<view class="chat-page">
+
+  <!-- ========== 商品信息卡片 ========== -->
+  <view class="goods-card" wx:if="{{goodsInfo}}" bindtap="onGoGoodsDetail">
+    <image class="goods-card-img" src="{{goodsInfo.images[0]}}" mode="aspectFill"/>
+    <view class="goods-card-info">
+      <text class="goods-card-title">{{goodsInfo.title}}</text>
+      <text class="goods-card-price">¥{{goodsInfo.price}}</text>
+    </view>
+  </view>
+
+  <!-- ========== 消息列表 ========== -->
+  <scroll-view
+    class="chat-messages"
+    scroll-y
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation
+  >
+    <view
+      class="msg-row {{item.isMine ? 'msg-right' : 'msg-left'}}"
+      wx:for="{{messages}}"
+      wx:key="index"
+      id="chat-msg-{{index}}"
+    >
+      <image
+        wx:if="{{!item.isMine}}"
+        class="msg-avatar"
+        src="{{otherUser.avatarUrl || '/images/default-avatar.png'}}"
+        mode="aspectFill"
+      />
+
+      <view class="msg-bubble-wrap">
+        <view class="msg-bubble {{item.isMine ? 'msg-bubble-mine' : 'msg-bubble-other'}}">
+          <text class="msg-text">{{item.content}}</text>
+        </view>
+        <text class="msg-time">{{item.time}}</text>
+      </view>
+
+      <image
+        wx:if="{{item.isMine}}"
+        class="msg-avatar"
+        src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"
+        mode="aspectFill"
+      />
+    </view>
+  </scroll-view>
+
+  <!-- ========== 输入栏 ========== -->
+  <view class="chat-input-bar safe-bottom">
+    <input
+      class="chat-input"
+      placeholder="输入消息..."
+      value="{{inputText}}"
+      bindinput="onInputChange"
+      bindconfirm="onSend"
+      confirm-type="send"
+      maxlength="500"
+    />
+    <view class="send-btn {{inputText ? 'send-btn-active' : ''}}" bindtap="onSend">
+      <text class="send-btn-text">发送</text>
+    </view>
+  </view>
+
+</view>

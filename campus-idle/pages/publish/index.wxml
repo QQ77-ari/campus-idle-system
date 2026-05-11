@@ -1,0 +1,140 @@
+<!--pages/publish/index.wxml-->
+<!-- 发布闲置页（商务大气版） -->
+
+<view class="page-wrap">
+
+  <!-- ========== 图片上传区 ========== -->
+  <view class="section">
+    <text class="section-label">商品图片（最多4张）</text>
+    <view class="image-list">
+      <view
+        wx:for="{{images}}"
+        wx:for-index="idx"
+        wx:key="*this"
+        class="image-item"
+      >
+        <image
+          class="image-preview"
+          src="{{item}}"
+          mode="aspectFill"
+          data-src="{{item}}"
+          bindtap="onPreviewImage"
+        />
+        <view class="image-remove" data-index="{{idx}}" catchtap="onRemoveImage">
+          <text class="remove-text">×</text>
+        </view>
+      </view>
+
+      <view
+        wx:if="{{images.length < 4}}"
+        class="image-add"
+        bindtap="onChooseImage"
+      >
+        <text class="add-icon">+</text>
+        <text class="add-text">添加图片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 标题 ========== -->
+  <view class="section">
+    <text class="section-label">商品标题</text>
+    <input
+      class="form-input"
+      placeholder="例如：考研数学复习全书 九成新"
+      maxlength="40"
+      value="{{title}}"
+      bindinput="onTitleInput"
+    />
+    <text class="char-count">{{title.length}}/40</text>
+  </view>
+
+  <!-- ========== 价格 ========== -->
+  <view class="section">
+    <text class="section-label">出售价格（元）</text>
+    <input
+      class="form-input"
+      type="digit"
+      placeholder="0.00"
+      value="{{price}}"
+      bindinput="onPriceInput"
+    />
+  </view>
+
+  <!-- ========== 分类 ========== -->
+  <view class="section">
+    <text class="section-label">商品分类</text>
+    <picker mode="selector" range="{{categoryList}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+      <view class="form-picker {{categoryIndex < 0 ? 'placeholder' : ''}}">
+        {{categoryIndex >= 0 ? categoryList[categoryIndex] : '请选择分类'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- ========== 新旧程度 ========== -->
+  <view class="section">
+    <text class="section-label">新旧程度</text>
+    <picker mode="selector" range="{{conditionList}}" value="{{conditionIndex}}" bindchange="onConditionChange">
+      <view class="form-picker {{conditionIndex < 0 ? 'placeholder' : ''}}">
+        {{conditionIndex >= 0 ? conditionList[conditionIndex] : '请选择新旧程度'}}
+      </view>
+    </picker>
+  </view>
+
+  <!-- ========== 详细描述 ========== -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-label">详细描述</text>
+      <view class="ai-gen-btn" bindtap="onAiGenDesc" wx:if="{{title}}">
+        <text class="ai-gen-text">AI 帮写</text>
+      </view>
+    </view>
+    <textarea
+      class="form-textarea"
+      placeholder="描述一下商品的使用情况、购入时间、瑕疵等信息..."
+      maxlength="500"
+      value="{{desc}}"
+      bindinput="onDescInput"
+    />
+    <text class="char-count">{{desc.length}}/500</text>
+  </view>
+
+  <!-- ========== 联系方式 ========== -->
+  <view class="section contact-section">
+    <text class="section-label">联系方式（至少填写一项）</text>
+    <view class="contact-fields">
+      <view class="contact-field">
+        <text class="contact-icon">✉</text>
+        <input
+          class="form-input contact-input"
+          placeholder="微信号（买家可通过此方式联系你）"
+          value="{{wechatId}}"
+          bindinput="onWechatInput"
+        />
+      </view>
+      <view class="contact-field">
+        <text class="contact-icon"> </text>
+        <input
+          class="form-input contact-input"
+          type="number"
+          maxlength="11"
+          placeholder="手机号（支持直接拨号联系）"
+          value="{{phone}}"
+          bindinput="onPhoneInput"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 提交按钮 ========== -->
+  <view class="submit-area">
+    <button
+      class="submit-btn {{isSubmitting ? 'disabled' : ''}}"
+      bindtap="onSubmit"
+      disabled="{{isSubmitting}}"
+    >
+      {{isSubmitting ? '发布中...' : '立即发布'}}
+    </button>
+  </view>
+
+</view>

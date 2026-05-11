@@ -1,0 +1,76 @@
+<!--pages/myPublish/index.wxml-->
+<!-- 我的发布页 -->
+
+<view class="page-wrap">
+
+  <!-- 有内容时 -->
+  <view wx:if="{{!isEmpty}}" class="publish-list">
+    <view
+      wx:for="{{publishList}}"
+      wx:key="_id"
+      class="publish-card"
+    >
+      <!-- 商品图片 -->
+      <image
+        class="publish-img"
+        src="{{item.images[0]}}"
+        mode="aspectFill"
+        data-id="{{item._id}}"
+        bindtap="onGoodsTap"
+        binderror="onImageError"
+        data-index="{{index}}"
+      />
+
+      <!-- 商品信息 -->
+      <view class="publish-info" data-id="{{item._id}}" bindtap="onGoodsTap">
+        <text class="publish-title">{{item.title}}</text>
+        <text class="publish-price">¥{{item.price}}</text>
+        <view class="publish-status">
+          <text class="status-tag {{item.status === '在售' ? 'on-sale' : 'sold'}}">
+            {{item.status}}
+          </text>
+        </view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="publish-actions">
+        <!-- 在售商品：显示编辑 -->
+        <view
+          wx:if="{{item.status === '在售'}}"
+          class="publish-btn"
+          data-id="{{item._id}}"
+          catchtap="onEditGoods"
+        >
+          <text class="btn-text">编辑</text>
+        </view>
+        <!-- 在售商品：显示下架 -->
+        <view
+          wx:if="{{item.status === '在售'}}"
+          class="publish-btn"
+          data-id="{{item._id}}"
+          data-title="{{item.title}}"
+          catchtap="onRemoveGoods"
+        >
+          <text class="btn-text">下架</text>
+        </view>
+        <!-- 所有商品：显示删除 -->
+        <view
+          class="publish-btn btn-danger"
+          data-id="{{item._id}}"
+          data-title="{{item.title}}"
+          catchtap="onDeleteGoods"
+        >
+          <text class="btn-text">删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">还没有发布过商品</text>
+    <text class="empty-sub">去发布一个闲置好物吧</text>
+  </view>
+
+</view>

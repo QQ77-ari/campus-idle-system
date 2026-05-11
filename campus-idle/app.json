@@ -1,0 +1,53 @@
+{
+  "cloudfunctionRoot": "cloud/",
+  "pages": [
+    "pages/index/index",
+    "pages/publish/index",
+    "pages/favorites/index",
+    "pages/myPublish/index",
+    "pages/profile/index",
+    "pages/goodsDetail/index",
+    "pages/privacy/index",
+    "pages/aiChat/index",
+    "pages/chat/index",
+    "pages/chatList/index",
+    "pages/orders/index",
+    "pages/orderDetail/index",
+    "pages/admin/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#2d6a4f",
+    "navigationBarTitleText": "校园闲置",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f0f2f5"
+  },
+  "tabBar": {
+    "color": "#9ca3af",
+    "selectedColor": "#2d6a4f",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/publish/index",
+        "text": "发布",
+        "iconPath": "images/tab-sell.png",
+        "selectedIconPath": "images/tab-sell-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

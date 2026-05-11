@@ -1,0 +1,72 @@
+<!--pages/admin/index.wxml-->
+<!-- 管理员数据后台 -->
+
+<view class="page-wrap">
+  <!-- 数据概览 -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-num">{{stats.totalGoods}}</text>
+      <text class="stat-label">总商品数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{stats.onSaleGoods}}</text>
+      <text class="stat-label">在售商品</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{stats.totalOrders}}</text>
+      <text class="stat-label">总订单数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{stats.completedOrders}}</text>
+      <text class="stat-label">已完成订单</text>
+    </view>
+    <view class="stat-card warn">
+      <text class="stat-num">{{stats.pendingReports}}</text>
+      <text class="stat-label">待处理举报</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num">{{stats.totalReports}}</text>
+      <text class="stat-label">总举报数</text>
+    </view>
+  </view>
+
+  <!-- 举报管理 -->
+  <view class="section">
+    <text class="section-title">举报处理</text>
+    <view wx:if="{{recentReports.length === 0}}" class="empty-mini">
+      <text>暂无举报</text>
+    </view>
+    <view class="report-item" wx:for="{{recentReports}}" wx:key="_id">
+      <view class="report-info">
+        <text class="report-title ellipsis">{{item.goodsTitle}}</text>
+        <text class="report-reason">原因：{{item.reason}}</text>
+        <text class="report-time">{{formatTime(item.reportedAt)}}</text>
+      </view>
+      <view class="report-actions" wx:if="{{item.status === '待处理'}}">
+        <view class="report-btn btn-handle" data-id="{{item._id}}" data-action="handle" catchtap="onHandleReport">
+          <text>处理</text>
+        </view>
+        <view class="report-btn btn-dismiss" data-id="{{item._id}}" data-action="dismiss" catchtap="onHandleReport">
+          <text>忽略</text>
+        </view>
+      </view>
+      <text wx:else class="report-status">{{item.status}}</text>
+    </view>
+  </view>
+
+  <!-- 最新商品 -->
+  <view class="section">
+    <text class="section-title">最新商品</text>
+    <view class="goods-admin-item" wx:for="{{recentGoods}}" wx:key="_id">
+      <image class="goods-admin-img" src="{{item.images[0] || '/images/goods-placeholder.png'}}" mode="aspectFill"/>
+      <view class="goods-admin-info">
+        <text class="goods-admin-title ellipsis">{{item.title}}</text>
+        <text class="goods-admin-price">¥{{item.price}}</text>
+        <text class="goods-admin-status {{item.status === '在售' ? 'on-sale' : ''}}">{{item.status}}</text>
+      </view>
+      <view wx:if="{{item.status === '在售'}}" class="goods-admin-action" data-id="{{item._id}}" catchtap="onTakeDownGoods">
+        <text>下架</text>
+      </view>
+    </view>
+  </view>
+</view>

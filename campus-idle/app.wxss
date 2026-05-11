@@ -1,0 +1,92 @@
+/* app.wxss — 全局公共样式（商务大气版） */
+
+/* ========== 全局重置 ========== */
+page {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue",
+    "Microsoft YaHei", sans-serif;
+  font-size: 28rpx;
+  color: #1a1a2e;
+  background-color: #f0f2f5;
+  box-sizing: border-box;
+}
+
+/* ========== 公用变量 ========== */
+page {
+  --primary: #2d6a4f;
+  --primary-light: rgba(45, 106, 79, 0.08);
+  --primary-gradient: linear-gradient(135deg, #2d6a4f, #40916c);
+  --accent: #d4a373;
+  --price: #c44536;
+  --bg: #f0f2f5;
+  --card: #fff;
+  --text: #1a1a2e;
+  --text-sub: #6b7280;
+  --text-light: #9ca3af;
+  --radius: 16rpx;
+  --shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+/* ========== 通用工具类 ========== */
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ellipsis-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 分割线 */
+.divider {
+  height: 20rpx;
+  background-color: var(--bg);
+}
+
+/* 卡片背景 */
+.card {
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* 底部安全区适配 */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ========== 渐变按钮 ========== */
+.btn-gradient {
+  background: var(--primary-gradient);
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  border: none;
+}
+
+.btn-gradient::after {
+  border: none;
+}
+
+/* ========== 淡入动画 ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}

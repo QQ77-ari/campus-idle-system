@@ -1,0 +1,66 @@
+<!--pages/orderDetail/index.wxml-->
+<!-- 订单详情页 -->
+
+<view class="page-wrap" wx:if="{{order}}">
+  <!-- 订单状态 -->
+  <view class="status-card">
+    <text class="status-text status-{{order.status}}">
+      {{order.status === 'pending' ? '待确认' : order.status === 'confirmed' ? '已确认' : order.status === 'completed' ? '已完成' : '已取消'}}
+    </text>
+    <text class="status-desc" wx:if="{{order.status === 'pending'}}">等待卖家确认交易</text>
+    <text class="status-desc" wx:elif="{{order.status === 'completed'}}">交易已完成，可以评价对方</text>
+  </view>
+
+  <!-- 商品信息 -->
+  <view class="info-section">
+    <text class="section-title">商品信息</text>
+    <view class="info-row">
+      <text class="info-label">商品名称</text>
+      <text class="info-value">{{order.goodsTitle}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">交易价格</text>
+      <text class="info-value price">¥{{order.price}}</text>
+    </view>
+    <view class="info-row">
+      <text class="info-label">创建时间</text>
+      <text class="info-value">{{formatTime(order.createdAt)}}</text>
+    </view>
+  </view>
+
+  <!-- 评价区域 -->
+  <view wx:if="{{canReview}}" class="review-section">
+    <text class="section-title">发表评价</text>
+    <view class="rating-row">
+      <text class="rating-label">评分：</text>
+      <view class="rating-stars">
+        <text
+          class="star {{reviewRating >= i ? 'active' : ''}}"
+          wx:for="{{[1,2,3,4,5]}}"
+          wx:key="*this"
+          data-rating="{{item}}"
+          bindtap="onRatingChange"
+        >{{reviewRating >= item ? '★' : '☆'}}</text>
+      </view>
+    </view>
+    <textarea
+      class="review-input"
+      placeholder="请输入评价..."
+      maxlength="200"
+      bindinput="onReviewInput"
+    />
+    <view class="review-submit" bindtap="onSubmitReview">
+      <text>提交评价</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section" wx:if="{{order.status === 'pending'}}">
+    <view class="action-btn confirm-btn" bindtap="onConfirmOrder">
+      <text>确认交易</text>
+    </view>
+    <view class="action-btn cancel-btn" bindtap="onCancelOrder">
+      <text>取消订单</text>
+    </view>
+  </view>
+</view>

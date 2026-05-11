@@ -1,0 +1,123 @@
+<!--pages/aiChat/index.wxml-->
+<!-- 智能助手聊天页 -->
+
+<view class="chat-page">
+
+  <!-- ========== 顶部操作栏 ========== -->
+  <view class="chat-header">
+    <text class="header-title">智能助手</text>
+    <view class="header-action" bindtap="onClearChat">
+      <text class="header-action-text">清空</text>
+    </view>
+  </view>
+
+  <!-- ========== 消息列表 ========== -->
+  <scroll-view
+    class="chat-messages"
+    scroll-y
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation
+  >
+    <!-- 快捷提问（仅在无消息或仅欢迎语时显示） -->
+    <view class="quick-section" wx:if="{{messages.length <= 1}}">
+      <text class="quick-title">常见问题</text>
+      <view class="quick-list">
+        <view
+          class="quick-item"
+          wx:for="{{quickQuestions}}"
+          wx:key="*this"
+          data-text="{{item}}"
+          bindtap="onQuickTap"
+        >
+          <text class="quick-item-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 消息气泡 -->
+    <view
+      class="msg-row {{item.role === 'user' ? 'msg-row-right' : 'msg-row-left'}}"
+      wx:for="{{messages}}"
+      wx:key="index"
+      id="msg-{{index}}"
+    >
+      <!-- AI 头像 -->
+      <image
+        wx:if="{{item.role === 'assistant'}}"
+        class="msg-avatar"
+        src="/images/default-avatar.png"
+        mode="aspectFill"
+      />
+
+      <view class="msg-bubble-wrap">
+        <!-- 图片消息 -->
+        <view
+          wx:if="{{item.type === 'image'}}"
+          class="msg-bubble {{item.role === 'user' ? 'msg-bubble-user' : 'msg-bubble-ai'}}"
+        >
+          <image
+            class="msg-image"
+            src="{{item.content}}"
+            mode="widthFix"
+            bindtap="onPreviewImage"
+            data-url="{{item.content}}"
+            show-menu-by-longpress
+          />
+        </view>
+        <!-- 文本消息 -->
+        <view
+          wx:else
+          class="msg-bubble {{item.role === 'user' ? 'msg-bubble-user' : 'msg-bubble-ai'}} {{item.isError ? 'msg-bubble-error' : ''}}"
+        >
+          <text class="msg-text">{{item.content}}</text>
+        </view>
+        <text class="msg-time">{{item.time}}</text>
+      </view>
+
+      <!-- 用户头像 -->
+      <image
+        wx:if="{{item.role === 'user'}}"
+        class="msg-avatar"
+        src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}"
+        mode="aspectFill"
+      />
+    </view>
+
+    <!-- AI 正在输入 -->
+    <view class="msg-row msg-row-left" wx:if="{{isLoading}}">
+      <image class="msg-avatar" src="/images/default-avatar.png" mode="aspectFill"/>
+      <view class="msg-bubble msg-bubble-ai">
+        <view class="typing-dots">
+          <view class="dot"></view>
+          <view class="dot"></view>
+          <view class="dot"></view>
+        </view>
+      </view>
+    </view>
+
+  </scroll-view>
+
+  <!-- ========== 底部输入栏 ========== -->
+  <view class="chat-input-bar safe-bottom">
+    <view class="input-action-btn" bindtap="onChooseImage">
+      <text class="input-action-icon">+</text>
+    </view>
+    <input
+      class="chat-input"
+      placeholder="输入你的问题..."
+      value="{{inputText}}"
+      bindinput="onInputChange"
+      bindconfirm="onSend"
+      confirm-type="send"
+      maxlength="500"
+      cursor-spacing="20"
+    />
+    <view
+      class="send-btn {{inputText && !isLoading ? 'send-btn-active' : ''}}"
+      bindtap="onSend"
+    >
+      <text class="send-btn-text">发送</text>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,144 @@
+<!--pages/goodsDetail/index.wxml-->
+<!-- 商品详情页（商务大气版） -->
+
+<!-- ==================== 加载状态 ==================== -->
+<view wx:if="{{isLoading}}" class="loading-page">
+  <text class="loading-text">加载中...</text>
+</view>
+
+<!-- ==================== 主体内容 ==================== -->
+<view wx:else class="page-wrap">
+
+  <!-- ========== 左上角返回按钮 ========== -->
+  <view class="back-btn" bindtap="onGoBack">
+    <text class="back-icon">‹</text>
+  </view>
+
+  <!-- ========== 顶部轮播图 ========== -->
+  <view class="swiper-section">
+    <swiper
+      class="swiper"
+      indicator-dots="{{false}}"
+      autoplay="{{false}}"
+      circular
+      bindchange="onSwiperChange"
+    >
+      <swiper-item
+        wx:for="{{goodsInfo.images}}"
+        wx:key="*this"
+      >
+        <image
+          class="swiper-img"
+          src="{{item}}"
+          mode="aspectFill"
+          data-src="{{item}}"
+          data-index="{{index}}"
+          bindtap="onPreviewImage"
+          binderror="onImageError"
+        />
+      </swiper-item>
+    </swiper>
+    <!-- 轮播页码指示器 -->
+    <view class="swiper-indicator">
+      {{currentSwiperIndex + 1}} / {{goodsInfo.images.length}}
+    </view>
+  </view>
+
+  <!-- ========== 价格与标题区域 ========== -->
+  <view class="info-section">
+    <view class="price-row">
+      <text class="price-symbol">¥</text>
+      <text class="price-value">{{goodsInfo.price}}</text>
+      <text wx:if="{{goodsInfo.originalPrice}}" class="price-original">
+        ¥{{goodsInfo.originalPrice}}
+      </text>
+    </view>
+
+    <text class="goods-title">{{goodsInfo.title}}</text>
+
+    <!-- 标签行 -->
+    <view class="tag-row">
+      <text class="tag">{{goodsInfo.category}}</text>
+      <text class="tag">{{goodsInfo.condition}}</text>
+    </view>
+
+    <!-- 浏览量与发布时间 -->
+    <view class="meta-row">
+      <text class="meta-text">{{goodsInfo.viewCount}}人浏览</text>
+      <text class="meta-text">{{goodsInfo.publishTime}}发布</text>
+    </view>
+  </view>
+
+  <!-- 分割线 -->
+  <view class="divider"></view>
+
+  <!-- ========== 卖家信息 ========== -->
+  <view class="seller-section">
+    <image class="seller-avatar" src="{{goodsInfo.avatarUrl}}" mode="aspectFill"/>
+    <view class="seller-info">
+      <text class="seller-name">{{goodsInfo.nickName}}</text>
+      <text class="seller-hint">在线卖家</text>
+    </view>
+    <view class="seller-badge">
+      <text class="badge-text">已认证</text>
+    </view>
+  </view>
+
+  <!-- ========== 联系方式预览 ========== -->
+  <view wx:if="{{goodsInfo.wechatId || goodsInfo.phone}}" class="contact-preview">
+    <view wx:if="{{goodsInfo.wechatId}}" class="contact-item">
+      <text class="contact-label">微信号</text>
+      <text class="contact-value">{{goodsInfo.wechatId}}</text>
+    </view>
+    <view wx:if="{{goodsInfo.phone}}" class="contact-item">
+      <text class="contact-label">手机号</text>
+      <text class="contact-value">{{goodsInfo.phone}}</text>
+    </view>
+  </view>
+
+  <!-- 分割线 -->
+  <view class="divider"></view>
+
+  <!-- ========== 商品详情介绍 ========== -->
+  <view class="detail-section">
+    <text class="section-title">商品详情</text>
+    <text class="detail-text">{{goodsInfo.desc}}</text>
+  </view>
+
+  <!-- 举报按钮 -->
+  <view class="report-section">
+    <text class="report-btn" bindtap="onReport">举报此商品</text>
+  </view>
+
+  <!-- 底部留白 -->
+  <view class="bottom-spacer"></view>
+
+  <!-- ========== 底部操作栏 ========== -->
+  <view class="bottom-bar">
+    <!-- 收藏按钮 -->
+    <view class="bar-btn" bindtap="onCollect">
+      <text class="bar-heart {{isCollected ? 'collected' : ''}}">
+        {{isCollected ? '❤' : '♡'}}
+      </text>
+      <text class="bar-text {{isCollected ? 'collected' : ''}}">
+        {{isCollected ? '已收藏' : '收藏'}}
+      </text>
+    </view>
+
+    <!-- 在线聊天 -->
+    <view class="bar-btn bar-btn-chat" bindtap="onChatSeller">
+      <text class="msg-btn-text">在线咨询</text>
+    </view>
+
+    <!-- 联系卖家 -->
+    <view class="bar-btn bar-btn-msg" bindtap="onContactSeller">
+      <text class="msg-btn-text">联系卖家</text>
+    </view>
+
+    <!-- 购买 -->
+    <view class="bar-btn bar-btn-buy" bindtap="onCreateOrder">
+      <text class="buy-btn-text">立即购买</text>
+    </view>
+  </view>
+
+</view>

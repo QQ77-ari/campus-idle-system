@@ -1,0 +1,49 @@
+<!--pages/favorites/index.wxml-->
+<!-- 我的收藏页（云开发版） -->
+
+<view class="page-wrap">
+
+  <!-- 有收藏内容时显示列表 -->
+  <view wx:if="{{!isEmpty}}" class="collect-list">
+    <view
+      wx:for="{{collectList}}"
+      wx:key="_id"
+      class="collect-card"
+    >
+      <!-- 商品图片 -->
+      <image
+        class="collect-img"
+        src="{{item.goodsCoverImg}}"
+        mode="aspectFill"
+        data-id="{{item.goodsId}}"
+        bindtap="onGoodsTap"
+        binderror="onImageError"
+        data-index="{{index}}"
+      />
+
+      <!-- 商品信息 -->
+      <view class="collect-info" data-id="{{item.goodsId}}" bindtap="onGoodsTap">
+        <text class="collect-title">{{item.goodsTitle}}</text>
+        <text class="collect-price">¥{{item.goodsPrice}}</text>
+      </view>
+
+      <!-- 取消收藏按钮（传入 _id 用于删除云数据库记录） -->
+      <view
+        class="collect-remove"
+        data-docid="{{item._id}}"
+        data-title="{{item.goodsTitle}}"
+        catchtap="onRemoveCollect"
+      >
+        <text class="remove-text">取消收藏</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <text class="empty-icon">❤</text>
+    <text class="empty-text">还没有收藏哦</text>
+    <text class="empty-sub">去首页逛逛，发现好物吧</text>
+  </view>
+
+</view>
